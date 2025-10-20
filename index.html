@@ -1,466 +1,409 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
-    <title>生日快乐，妈妈！</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Caveat', cursive;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #78c8d8 0%, #72c0e1 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
-        }
-        
-        header {
-            margin: 20px 0;
-            animation: fadeIn 2s ease;
-        }
-        
-        h1 {
-            color: #d32f2f;
-            font-size: 3rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            color: #5d4037;
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-        }
-        
-        .cake-container {
-            position: relative;
-            margin: 30px auto;
-            width: 300px;
-            height: 300px;
-        }
-        
-        .cake {
-            position: relative;
-            width: 200px;
-            height: 120px;
-            background: #ffcdd2;
-            border-radius: 10px 10px 0 0;
-            margin: 0 auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .cake-top {
-            position: absolute;
-            top: -20px;
-            left: 0;
-            width: 100%;
-            height: 40px;
-            background: #f8bbd0;
-            border-radius: 50%;
-        }
-        
-        .candle {
-            position: absolute;
-            top: -30px; 
-            left: 50%;
-            transform: translateX(-50%);
-            width: 10px;
-            height: 40px;
-            background: #4fc3f7;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .flame {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 15px;
-            height: 25px;
-            background: #ffeb3b;
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 10px #ff9800;
-            animation: flicker 0.5s infinite alternate;
-        }
-        
-        .message {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            animation: slideUp 1.5s ease;
-        }
-        
-        .photo-gallery {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .photo-placeholder {
-            width: 150px;
-            height: 150px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #757575;
-            font-size: 0.9rem;
-            overflow: hidden;
-        }
-        
-        .photo-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .game-container {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .memory-game {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin: 20px auto;
-            max-width: 400px;
-        }
-        
-        .memory-card {
-            width: 80px;
-            height: 80px;
-            background: #bbdefb;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .memory-card:hover {
-            transform: scale(1.05);
-        }
-        
-        .memory-card.flipped {
-            background: #e3f2fd;
-        }
-        
-        button {
-            background: #d32f2f;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 1rem;
-            cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        button:hover {
-            background: #b71c1c;
-            transform: translateY(-2px);
-        }
-        
-        .firework {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            pointer-events: none;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes flicker {
-            0%, 100% { 
-                transform: translateX(-50%) scale(1);
-                opacity: 1;
-            }
-            50% { 
-                transform: translateX(-50%) scale(0.9);
-                opacity: 0.8;
-            }
-        }
-        
-        @keyframes blowOut {
-            0% { 
-                transform: translateX(-50%) scale(1);
-                opacity: 1;
-            }
-            100% { 
-                transform: translateX(-50%) scale(0);
-                opacity: 0;
-            }
-        }
-        
-        footer {
-            margin-top: 30px;
-            color: #5d4037;
-            font-size: 0.9rem;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .cake-container {
-                width: 250px;
-                height: 250px;
-            }
-            
-            .cake {
-                width: 160px;
-                height: 100px;
-            }
-            
-            .memory-game {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 8px;
-            }
-            
-            .memory-card {
-                width: 70px;
-                height: 70px;
-                font-size: 1.2rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+<title>生日快乐，妈妈！</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Caveat', cursive; }
+body {
+    background: linear-gradient(135deg, #db77a3 0%, #e07abc 100%);
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:20px;
+    overflow-x:hidden;
+}
+.container { max-width:800px; width:100%; text-align:center; }
+header { margin:20px 0; animation:fadeIn 2s ease; }
+h1 { color:#fa0c0c; font-size:3rem; text-shadow:2px 2px 4px rgba(0,0,0,0.2); margin-bottom:10px; }
+.subtitle { color:#5d4037; font-size:1.5rem; margin-bottom:30px; }
+
+/* 圆形照片 */
+.mom-photo {
+    width:150px; height:150px;
+    border-radius:50%;
+    overflow:hidden;
+    margin:0 auto 20px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+}
+.mom-photo img { width:100%; height:100%; object-fit:cover; }
+
+/* 蛋糕和蜡烛 */
+.cake-container { position:relative; margin:30px auto; width:300px; height:300px; }
+.cake {
+    position:relative;
+    width:200px;
+    height:120px;
+    background:#ffcdd2;
+    border-radius:10px 10px 0 0;
+    margin:0 auto;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+.cake-top { position:absolute; top:-20px; left:0; width:100%; height:40px; background:#f8bbd0; border-radius:50%; }
+.candle {
+    position:absolute;
+    top:20px; /* 插在蛋糕上 */
+    left:50%;
+    transform:translateX(-50%);
+    width:14px; height:50px;
+    background:#4fc3f7;
+    border-radius:6px;
+    cursor:pointer;
+    transition:all 0.3s ease;
+    z-index:5;
+    display:none; /* 初始隐藏，游戏三完成后显示 */
+}
+.flame {
+    position:absolute;
+    top:-25px; left:50%;
+    transform:translateX(-50%);
+    width:18px; height:30px;
+    background:#ffeb3b;
+    border-radius:50% 50% 20% 20%;
+    box-shadow:0 0 10px #ff9800;
+    animation:flicker 0.5s infinite alternate;
+}
+
+/* 照片占位 */
+.photo-gallery { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:20px 0; }
+.photo-placeholder {
+    width:150px; height:150px; background:#e0e0e0; border-radius:10px;
+    display:flex; align-items:center; justify-content:center; color:#757575; font-size:0.95rem; overflow:hidden;
+}
+.photo-placeholder img { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* 游戏区 */
+.game-container {
+    background: rgba(255,255,255,0.95); padding:16px; border-radius:12px; margin:16px 0;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+.memory-game {
+    display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:12px auto; max-width:420px;
+}
+.memory-card {
+    width:80px; height:80px; background:#bbdefb; border-radius:10px; display:flex;
+    align-items:center; justify-content:center; font-size:1.4rem; cursor:pointer; transition:transform .2s;
+    user-select:none;
+}
+.memory-card:hover { transform:scale(1.05); }
+.memory-card.flipped { background:#e3f2fd; }
+
+button {
+    background:#d32f2f; color:#fff; border:none; padding:10px 18px; border-radius:50px; font-size:1rem; cursor:pointer;
+    margin:8px; transition:all 0.2s; box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+button:disabled { background:#ccc; cursor:not-allowed; box-shadow:none; }
+
+.firework { position:absolute; width:6px; height:6px; border-radius:50%; pointer-events:none; }
+
+.locked { filter:grayscale(100%); opacity:0.5; }
+.unlocked { filter:none; opacity:1; }
+
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+@keyframes slideUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+@keyframes flicker {
+    0%,100%{ transform:translateX(-50%) scale(1); opacity:1; }
+    50%{ transform:translateX(-50%) scale(0.9); opacity:0.8; }
+}
+@keyframes blowOut {
+    0%{ transform:translateX(-50%) scale(1); opacity:1; }
+    100%{ transform:translateX(-50%) scale(0); opacity:0; }
+}
+
+/* 响应式 */
+@media (max-width:600px){
+    h1{font-size:2.2rem;}
+    .cake-container{width:250px;height:250px;}
+    .cake{width:160px;height:100px;}
+    .memory-card{width:70px;height:70px;font-size:1.2rem;}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>李女士，生日快乐！</h1>
-            <p class="subtitle">你是世界上最好的妈妈！</p>
-        </header>
-        
-        <div class="cake-container">
-            <div class="cake">
-                <div class="cake-top"></div>
-            </div>
-            <div class="candle">
-                <div class="flame" id="flame"></div>
-            </div>
-        </div>
-        
-        <button id="blowBtn">吹灭蜡烛</button>
-        <button id="resetBtn">重新点燃</button>
-        
-        <div class="message">
-            <h2>亲爱的李女士：</h2>
-            <p>一直以来我都以你为我的榜样，明明只是小学学历却找到了一份不错的工作，明明胆子小却也努力考驾照就算几次挂科也没有气馁，明明听课都困的不行却也成功考上了会计证。也许找工作、考驾照、考会计证等等事情并不是什么很了不起的事情，可是发生在你身上我却觉得额外厉害，就算别人不理解，就算有人否定你，就算有再多困难，你都一路坚持了下来，真的很了不起。每当和别人聊起母亲，我总是会以你为荣，向别人介绍你的这些履历包括你最近经营的抖音账号，有时候看着你真的会觉得只要想就能做到！高三那年我经常很杨颜妃讨论很多事情，每当聊到妈妈这个话题我都会很自豪也会在心里为高考积赞一份力量，说这些都只想表达一件事情：妈妈，你真的很优秀，就算不作为你的女儿，作为一名大学生的角度，我依然会觉得你很优秀。所以我希望妈妈能越来越自信，希望李女士能做自己想做的事情不被外界种种所干扰，想考什么证，想读什么书，都能大胆去做，就算想躺平也不用带着焦虑，过你想过的人生！</p>
-            <p>—— 爱你的孩子</p>
-        </div>
-        
-        <div class="photo-gallery">
-            <div class="photo-placeholder">
-                <img src="./images/hezhao1.jpg" alt="和妈妈的合照">
-            </div>
-            <div class="photo-placeholder">
-                <img src="./images/hezhao2.jpg" alt="和妈妈的合照">
-            </div>
-            <div class="photo-placeholder">
-                <img src="./images/hezhao3.jpg" alt="和妈妈的合照">
-            </div>
-        </div>
-        
-        <div class="game-container">
-            <h2>生日记忆游戏</h2>
-            <p>找到所有相同的卡片！</p>
-            <div class="memory-game" id="memoryGame">
-                <!-- 卡片将通过JavaScript动态生成 -->
-            </div>
-            <button id="restartGame">重新开始游戏</button>
-        </div>
-        
-        <footer>
-            <p>  祝李女士生日快乐！</p>
-        </footer>
+<div class="container">
+
+    <header>
+        <h1>李女士，生日快乐！</h1>
+        <p class="subtitle">你是世界上最好的妈妈！</p>
+    </header>
+
+    <!-- 圆形妈妈照片 -->
+    <div class="mom-photo">
+        <img src="./images/mom.jpg" alt="妈妈照片">
     </div>
 
-    <script>
-        // 蜡烛交互功能
-        const flame = document.getElementById('flame');
-        const blowBtn = document.getElementById('blowBtn');
-        const resetBtn = document.getElementById('resetBtn');
-        
-        blowBtn.addEventListener('click', function() {
-            flame.style.animation = 'blowOut 0.5s forwards';
-            setTimeout(createFireworks, 500);
-        });
-        
-        resetBtn.addEventListener('click', function() {
-            flame.style.animation = 'flicker 0.5s infinite alternate';
-        });
-        
-        // 烟花特效
-        function createFireworks() {
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    createFirework();
-                }, i * 100);
+    <!-- 蛋糕 -->
+    <div class="cake-container">
+        <div class="cake"><div class="cake-top"></div></div>
+        <div class="candle" id="candle" title="完成游戏三后吹蜡烛"><div class="flame" id="flame"></div></div>
+    </div>
+
+    <div style="margin:10px;">
+        <button id="blowBtn" disabled>吹灭蜡烛</button>
+        <button id="resetBtn" disabled>重新点燃</button>
+    </div>
+
+    <!-- 照片占位 -->
+    <div class="photo-gallery">
+        <div class="photo-placeholder locked" id="photo1"><div>完成记忆游戏解锁</div></div>
+        <div class="photo-placeholder locked" id="photo2"><div>完成祝福收集解锁</div></div>
+        <div class="photo-placeholder locked" id="photo3"><div>完成爱心收集解锁</div></div>
+    </div>
+
+    <!-- 游戏一：记忆配对 -->
+    <div class="game-container">
+        <h2>游戏一：记忆配对</h2>
+        <p>完成配对即可解锁第一张照片</p>
+        <div id="memoryGame" class="memory-game"></div>
+        <div><button id="restartMemory">重置游戏一</button></div>
+    </div>
+
+    <!-- 游戏二：生日祝福收集 -->
+    <div class="game-container">
+        <h2>游戏二：祝福收集</h2>
+        <p>点击出现的气球/爱心收集祝福，完成后解锁第二张照片</p>
+        <canvas id="game2Canvas" width="400" height="300" style="border:1px solid #ccc;"></canvas>
+        <div><button id="restartGame2">重置游戏二</button></div>
+    </div>
+
+    <!-- 游戏三：爱心收集 -->
+    <div class="game-container">
+        <h2>游戏三：爱心收集</h2>
+        <p>点击飘落的爱心，收集到10颗后解锁蜡烛和第三张照片</p>
+        <canvas id="game3Canvas" width="400" height="300" style="border:1px solid #ccc;"></canvas>
+        <div><button id="restartGame3">重置游戏三</button></div>
+    </div>
+
+    <!-- 最终生日祝福段落 -->
+    <div class="message" id="finalMessage" style="display:none;">
+        <h2>亲爱的李女士：</h2>
+        <p>一直以来我都以你为我的榜样，明明只是小学学历却找到了一份不错的工作，明明胆子小却也努力考驾照就算几次挂科也没有气馁，明明听课都困的不行却也成功考上了会计证。也许找工作、考驾照、考会计证等等事情并不是什么很了不起的事情，可是发生在你身上我却觉得额外厉害，就算别人不理解，就算有人否定你，就算有再多困难，你都一路坚持了下来，真的很了不起。每当和别人聊起母亲，我总是会以你为荣，向别人介绍你的这些履历包括你最近经营的抖音账号，有时候看着你真的会觉得只要想就能做到！高三那年我经常很杨颜妃讨论很多事情，每当聊到妈妈这个话题我都会很自豪也会在心里为高考积赞一份力量，说这些都只想表达一件事情：妈妈，你真的很优秀，就算不作为你的女儿，作为一名大学生的角度，我依然会觉得你很优秀。所以我希望妈妈能越来越自信，希望李女士能做自己想做的事情不被外界种种所干扰，想考什么证，想读什么书，都能大胆去做，就算想躺平也不用带着焦虑，不要被我们束缚住，过你想过的人生！</p>
+        <p>—— 爱你的云宝</p>
+    </div>
+
+    <footer><p>祝李女士生日快乐！</p></footer>
+</div>
+
+<!-- 背景音乐 -->
+<button id="startBtn">点击播放生日音乐</button>
+<audio id="birthdayMusic" src="https://www.orangefreesounds.com/wp-content/uploads/2018/11/Happy-birthday-piano-music.mp3" loop></audio>
+
+<script>
+  const startBtn = document.getElementById('startBtn');
+  const music = document.getElementById('birthdayMusic');
+
+  startBtn.addEventListener('click', () => {
+    music.play();
+    startBtn.style.display = 'none'; // 播放后隐藏按钮
+  });
+</script>
+
+
+
+
+
+<script>
+/* ---------------- 游戏一：记忆配对 ---------------- */
+const memoryGame = document.getElementById('memoryGame');
+const restartMemory = document.getElementById('restartMemory');
+const photo1 = document.getElementById('photo1');
+const candle = document.getElementById('candle');
+const blowBtn = document.getElementById('blowBtn');
+const resetBtn = document.getElementById('resetBtn');
+const flame = document.getElementById('flame');
+const photo2 = document.getElementById('photo2');
+const photo3 = document.getElementById('photo3');
+const finalMessage = document.getElementById('finalMessage');
+
+const symbols = ['天','生','日','快','乐','天','开','心'];
+let cards = [...symbols,...symbols];
+let flipped = [];
+let matched = [];
+
+function shuffle(array){
+    for(let i=array.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [array[i],array[j]]=[array[j],array[i]];
+    }
+    return array;
+}
+
+function initMemoryGame(){
+    memoryGame.innerHTML=''; flipped=[]; matched=[];
+    cards = shuffle([...cards]);
+    cards.forEach((s, idx)=>{
+        const card = document.createElement('div');
+        card.className='memory-card';
+        card.dataset.symbol = s;
+        card.dataset.index = idx;
+        card.addEventListener('click', memoryFlip);
+        memoryGame.appendChild(card);
+    });
+}
+function memoryFlip(){
+    if(flipped.length<2 && !this.classList.contains('flipped') && !matched.includes(this)){
+        this.classList.add('flipped'); this.textContent=this.dataset.symbol;
+        flipped.push(this);
+        if(flipped.length===2) checkMemoryMatch();
+    }
+}
+function checkMemoryMatch(){
+    const [c1,c2] = flipped;
+    if(c1.dataset.symbol===c2.dataset.symbol){
+        matched.push(c1,c2); flipped=[];
+        if(matched.length===cards.length){
+            setTimeout(()=>{
+                alert('游戏一完成！解锁第一张照片');
+                photo1.classList.remove('locked'); photo1.classList.add('unlocked');
+                photo1.innerHTML='<img src="./images/hezhao1.jpg" alt="合照1">';
+            },300);
+        }
+    } else {
+        setTimeout(()=>{
+            c1.classList.remove('flipped'); c1.textContent='';
+            c2.classList.remove('flipped'); c2.textContent='';
+            flipped=[];
+        },800);
+    }
+}
+restartMemory.addEventListener('click', initMemoryGame);
+
+/* ---------------- 游戏二：祝福收集 ---------------- */
+const game2Canvas = document.getElementById('game2Canvas');
+const ctx2 = game2Canvas.getContext('2d');
+const restartGame2 = document.getElementById('restartGame2');
+const blessings = ["妈妈辛苦了！","永远爱您！","祝您健康快乐！","您是最美的妈妈！","谢谢您的养育之恩！"];
+let balloons2 = [];
+let clickedBlessings2 = 0;
+
+function createBalloon2(){
+    const x = Math.random()* (game2Canvas.width-40);
+    balloons2.push({x:x, y:game2Canvas.height, w:30, h:30, text:blessings[Math.floor(Math.random()*blessings.length)]});
+}
+function drawBalloons2(){
+    ctx2.clearRect(0,0,game2Canvas.width,game2Canvas.height);
+    balloons2.forEach(b=>{
+        ctx2.fillStyle="#f48fb1"; ctx2.beginPath();
+        ctx2.ellipse(b.x+15,b.y+15,15,20,0,0,Math.PI*2);
+        ctx2.fill();
+        ctx2.fillStyle="#fff"; ctx2.font="12px sans-serif"; ctx2.fillText(b.text,b.x-10,b.y+35);
+        b.y-=0.8;
+    });
+    balloons2 = balloons2.filter(b=>b.y+20>0);
+}
+game2Canvas.addEventListener('click', e=>{
+    const rect = game2Canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    for(let i=0;i<balloons2.length;i++){
+        const b = balloons2[i];
+        if(mx>b.x && mx<b.x+b.w && my>b.y && my<b.y+b.h){
+            clickedBlessings2++;
+            alert(b.text);
+            balloons2.splice(i,1);
+            if(clickedBlessings2>=5){
+                setTimeout(()=>{
+                    alert('游戏二完成！解锁第二张照片');
+                    photo2.classList.remove('locked'); photo2.classList.add('unlocked');
+                    photo2.innerHTML='<img src="./images/hezhao2.jpg" alt="合照2">';
+                },200);
             }
+            break;
         }
-        
-        function createFirework() {
-            const firework = document.createElement('div');
-            firework.classList.add('firework');
-            
-            // 随机颜色
-            const colors = ['#ff5252', '#ffeb3b', '#4caf50', '#2196f3', '#9c27b0'];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            firework.style.background = color;
-            
-            // 随机位置
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight;
-            firework.style.left = `${x}px`;
-            firework.style.top = `${y}px`;
-            
-            document.body.appendChild(firework);
-            
-            // 动画
-            const size = Math.random() * 10 + 5;
-            firework.style.width = `${size}px`;
-            firework.style.height = `${size}px`;
-            
-            // 移除烟花
-            setTimeout(() => {
-                firework.remove();
-            }, 1000);
-        }
-        
-        // 记忆游戏
-        const memoryGame = document.getElementById('memoryGame');
-        const restartGameBtn = document.getElementById('restartGame');
-        
-        const symbols = ['天', '生', '日', '快', '乐', '天', '开', '心'];
-        let cards = [...symbols, ...symbols];
-        let flippedCards = [];
-        let matchedCards = [];
-        
-        // 洗牌函数
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+    }
+});
+function updateGame2(){
+    if(clickedBlessings2<5){
+        if(Math.random()<0.02) createBalloon2();
+        drawBalloons2();
+        requestAnimationFrame(updateGame2);
+    }
+}
+restartGame2.addEventListener('click', ()=>{
+    balloons2=[]; clickedBlessings2=0; updateGame2();
+});
+updateGame2();
+
+/* ---------------- 游戏三：爱心收集 ---------------- */
+const game3Canvas = document.getElementById('game3Canvas');
+const ctx3 = game3Canvas.getContext('2d');
+const restartGame3 = document.getElementById('restartGame3');
+let hearts3=[], collected3=0;
+
+function createHeart3(){
+    const x = Math.random()*(game3Canvas.width-20);
+    hearts3.push({x:x, y:-20, w:20, h:20});
+}
+function drawHearts3(){
+    ctx3.clearRect(0,0,game3Canvas.width,game3Canvas.height);
+    hearts3.forEach(h=>{
+        ctx3.fillStyle="#f06292";
+        ctx3.beginPath();
+        ctx3.moveTo(h.x+10,h.y+10);
+        ctx3.bezierCurveTo(h.x+10,h.y,h.x,h.y,h.x,h.y+10);
+        ctx3.bezierCurveTo(h.x,h.y+20,h.x+10,h.y+20,h.x+10,h.y+30);
+        ctx3.bezierCurveTo(h.x+10,h.y+20,h.x+20,h.y+20,h.x+20,h.y+10);
+        ctx3.bezierCurveTo(h.x+20,h.y,h.x+10,h.y,h.x+10,h.y+10);
+        ctx3.fill();
+        h.y+=1;
+    });
+    hearts3=hearts3.filter(h=>h.y<game3Canvas.height);
+}
+game3Canvas.addEventListener('click', e=>{
+    const rect = game3Canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    for(let i=0;i<hearts3.length;i++){
+        const h = hearts3[i];
+        if(mx>h.x && mx<h.x+h.w && my>h.y && my<h.y+h.h){
+            collected3++;
+            hearts3.splice(i,1);
+            if(collected3>=10){
+                setTimeout(()=>{
+                    alert('游戏三完成！解锁蜡烛和第三张照片！');
+                    photo3.classList.remove('locked'); photo3.classList.add('unlocked');
+                    photo3.innerHTML='<img src="./images/hezhao3.jpg" alt="合照3">';
+                    candle.style.display='block';
+                    blowBtn.disabled=false;
+                    resetBtn.disabled=false;
+                    finalMessage.style.display='block';
+                },200);
             }
-            return array;
+            break;
         }
-        
-        // 初始化游戏
-        function initGame() {
-            memoryGame.innerHTML = '';
-            flippedCards = [];
-            matchedCards = [];
-            
-            const shuffledCards = shuffle(cards);
-            
-            shuffledCards.forEach((symbol, index) => {
-                const card = document.createElement('div');
-                card.classList.add('memory-card');
-                card.dataset.symbol = symbol;
-                card.dataset.index = index;
-                
-                card.addEventListener('click', flipCard);
-                
-                memoryGame.appendChild(card);
-            });
-        }
-        
-        // 翻转卡片
-        function flipCard() {
-            if (flippedCards.length < 2 && !this.classList.contains('flipped') && !matchedCards.includes(this)) {
-                this.classList.add('flipped');
-                this.textContent = this.dataset.symbol;
-                flippedCards.push(this);
-                
-                if (flippedCards.length === 2) {
-                    checkMatch();
-                }
-            }
-        }
-        
-        // 检查匹配
-        function checkMatch() {
-            const [card1, card2] = flippedCards;
-            
-            if (card1.dataset.symbol === card2.dataset.symbol) {
-                matchedCards.push(card1, card2);
-                flippedCards = [];
-                
-                if (matchedCards.length === cards.length) {
-                    setTimeout(() => {
-                        alert('恭喜！你找到了所有匹配！');
-                    }, 500);
-                }
-            } else {
-                setTimeout(() => {
-                    card1.classList.remove('flipped');
-                    card2.classList.remove('flipped');
-                    card1.textContent = '';
-                    card2.textContent = '';
-                    flippedCards = [];
-                }, 1000);
-            }
-        }
-        
-        // 重新开始游戏
-        restartGameBtn.addEventListener('click', initGame);
-        
-        // 初始化页面
-        window.onload = function() {
-            initGame();
-        };
-    </script>
+    }
+});
+function updateGame3(){
+    if(collected3<10){
+        if(Math.random()<0.02) createHeart3();
+        drawHearts3();
+        requestAnimationFrame(updateGame3);
+    }
+}
+restartGame3.addEventListener('click', ()=>{
+    hearts3=[]; collected3=0; updateGame3();
+});
+updateGame3();
+
+/* ---------------- 吹蜡烛 ---------------- */
+function blowOutAnimationAndUnlock(){
+    if(blowBtn.disabled) return;
+    flame.style.animation = 'blowOut 0.6s forwards';
+    setTimeout(()=>{
+        createFireworks(); // ✅ 这里加上烟花效果
+        photo3.classList.remove('locked'); photo3.classList.add('unlocked');
+        photo3.innerHTML = '<img src="./images/hezhao3.jpg" alt="合照3">';
+        alert('蜡烛吹灭啦！第三张合照已解锁～');
+    }, 700);
+}
+
+/* ---------------- 页面初始化 ---------------- */
+window.onload = function(){
+    initMemoryGame();
+};
+</script>
 </body>
 </html>
